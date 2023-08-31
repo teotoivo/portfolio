@@ -7,14 +7,21 @@ import type { Database } from "@/types/supabase";
 
 function useOutsideAlerter(
   ref: React.RefObject<HTMLDivElement>,
-  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>
+  setShowMenu: React.Dispatch<React.SetStateAction<boolean>>,
+  otherRef: React.RefObject<HTMLDivElement>
 ) {
   useEffect(() => {
     /**
      * Alert if clicked on outside of element
      */
     function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target as Node) &&
+        !otherRef.current!.contains(event.target as Node)
+      ) {
+        console.log("outside");
+
         setShowMenu(false);
       }
     }
@@ -33,11 +40,13 @@ export default function UserMenu() {
   const [showMenu, setShowMenu] = useState(false);
 
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef, setShowMenu);
+  const buttonRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setShowMenu, buttonRef);
 
   return (
     <>
       <button
+        ref={buttonRef}
         className=" bg-btn-background ml-auto rounded-full  hover:border-btn-border-hover hover:scale-105 ease-in-out duration-200 shadow-btn-main shadow-white"
         onClick={() => setShowMenu(!showMenu)}
       >

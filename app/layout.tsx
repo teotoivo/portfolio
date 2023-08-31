@@ -23,7 +23,7 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en" className="scroll-smooth text-xl md:text-base xl:text-sm">
+    <html lang="en" className="scroll-smooth text-xl md:text-base">
       <body className="flex flex-col min-h-screen m-0 overflow-x-hidden">
         <div className="pt-16 bg-transparent border-none ">
           {/** must stay othervice header might overlap with other things */}

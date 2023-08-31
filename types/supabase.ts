@@ -9,20 +9,33 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      countries: {
+      profiles: {
         Row: {
-          id: number
-          name: string
+          age: number | null
+          first_name: string | null
+          id: string
+          last_name: string | null
         }
         Insert: {
-          id?: number
-          name: string
+          age?: number | null
+          first_name?: string | null
+          id: string
+          last_name?: string | null
         }
         Update: {
-          id?: number
-          name?: string
+          age?: number | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
