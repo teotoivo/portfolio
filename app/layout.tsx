@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import type { Database } from "@/types/supabase";
 
 export const metadata = {
   title: "Next.js",
@@ -24,7 +25,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="flex flex-col min-h-screen m-0 overflow-x-hidden">
-        <div className="pt-16">
+        <div className="pt-16 bg-transparent border-none ">
           {/** must stay othervice header might overlap with other things */}
         </div>
         <Header user={session?.user!} />

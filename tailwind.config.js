@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
+        background: "rgb(var(--background))",
+        "background-with-opacity": "var(--background-with-opacity)",
         btn: {
           background: "var(--btn-background)",
           border: "var(--btn-border)",
@@ -16,8 +17,7 @@ module.exports = {
         },
       },
       backgroundImage: {
-        main: 'url("")',
-        background: 'url("/background.jpg") no-repeat center fixed',
+        main: "var(--bakcground-image)",
       },
       boxShadow: {
         "btn-main": "0 0 14px -10px var(--btn-border)",

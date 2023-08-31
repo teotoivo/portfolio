@@ -2,6 +2,7 @@
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import type { Database } from "@/types/supabase";
 
 export default function page() {
   const router = useRouter();
