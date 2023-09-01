@@ -26,7 +26,7 @@ export default function page() {
   };
 
   return (
-    <div className="flex bg-main bg-cover flex-1 flex-col items-center justify-center">
+    <div className="flex flex-1 flex-col items-center justify-center">
       <div className="rounded-md bg-background-with-opacity p-10 flex flex-col justify-center items-center">
         <Login />
       </div>

@@ -31,8 +31,9 @@ export default async function RootLayout({
           {/** must stay othervice header might overlap with other things */}
         </div>
         <Header />
-
-        {children}
+        <div className="flex-1 bg-main bg-fixed bg-cover flex  flex-col">
+          {children}
+        </div>
       </body>
     </html>
   );

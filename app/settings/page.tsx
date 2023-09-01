@@ -21,8 +21,8 @@ export default async function page() {
   console.log(profiles); */
 
   return (
-    <div className="bg-main flex-1 bg-cover flex flex-col items-center justify-center">
-      <div className="rounded-md bg-background-with-opacity p-10">
+    <div className="flex flex-1 flex-col items-center justify-center">
+      <div className="rounded-md bg-background-with-opacity p-10 flex flex-col justify-center items-center">
         <p>first name: {session?.user.user_metadata.first_name}</p>
         <p>last name: {session?.user.user_metadata.last_name}</p>
         <p>email: {session?.user.email}</p>

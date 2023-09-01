@@ -13,11 +13,5 @@ export default async function page() {
 
   const { data: countries } = await supabase.from("countries").select();
 
-  return (
-    <div className="flex-1 ">
-      <div className="h-fit bg-main bg-fixed bg-cover flex  flex-col">
-        <MainCard />
-      </div>
-    </div>
-  );
+  return <MainCard />;
 }
