@@ -11,19 +11,19 @@ export interface Database {
     Tables: {
       profiles: {
         Row: {
-          age: number | null
+          age: string | null
           first_name: string | null
           id: string
           last_name: string | null
         }
         Insert: {
-          age?: number | null
+          age?: string | null
           first_name?: string | null
           id: string
           last_name?: string | null
         }
         Update: {
-          age?: number | null
+          age?: string | null
           first_name?: string | null
           id?: string
           last_name?: string | null
