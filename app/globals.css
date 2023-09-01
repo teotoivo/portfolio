@@ -4,30 +4,33 @@
 
 @layer base {
   :root {
-    --background: #131313;
+    --background: 19, 19, 19;
     --btn-background: #1b1b1b;
     --btn-border: #7c7c7c;
     --btn-border-hover: #b0b0b0;
     --btn-secondary-background: #848484;
     --text-primary: #efefef;
+    --background-with-opacity: rgba(var(--background), 0.8);
+    --bakcground-image: url("/background.jpg");
   }
 
   @media (prefers-color-scheme: light) {
     :root {
-      --background: #131313;
-      --btn-background: #1b1b1b;
+      --background: 239, 239, 239;
+      --btn-background: rgb(var(--background));
       --btn-border: #7c7c7c;
       --btn-border-hover: #b0b0b0;
       --btn-secondary-background: #848484;
-      --text-primary: #efefef;
+      --text-primary: rgb(19, 19, 19);
+      --background-with-opacity: rgba(var(--background), 0.8);
+      --bakcground-image: url("/background_light.jpg");
     }
   }
-}
-
-@layer base {
   body {
-    background-color: var(--background);
+    background-color: rgb(var(--background));
+  }
+  * {
     color: var(--text-primary);
-    font-family: "Times New Roman", Times, serif;
+    font-family: Georgia, Times, "Times New Roman", serif;
   }
 }
