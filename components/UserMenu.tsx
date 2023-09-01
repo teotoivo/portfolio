@@ -20,9 +20,7 @@ function useOutsideAlerter(
         !ref.current.contains(event.target as Node) &&
         !otherRef.current!.contains(event.target as Node)
       ) {
-        console.log("outside");
-
-        setShowMenu(false);
+        setShowMenu(true);
       }
     }
     // Bind the event listener
@@ -37,7 +35,7 @@ function useOutsideAlerter(
 export default function UserMenu() {
   const supabase = createClientComponentClient<Database>();
   const router = useRouter();
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
 
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
@@ -52,27 +50,26 @@ export default function UserMenu() {
       >
         <img src="/user.png" alt="" className="h-12 dark:invert" />
       </button>
-      {showMenu && (
-        <div
-          ref={wrapperRef}
-          className="absolute top-20 bg-background-with-opacity right-4 h-fit w-fit shadow-btn-main shadow-btn-border rounded-md flex p-4 flex-col"
-        >
-          <Link href={"/settings"} onClick={() => setShowMenu(false)}>
-            settings
-          </Link>
-          <button
-            onClick={async () => {
-              setShowMenu(false);
 
-              await supabase.auth.signOut();
-              router.push("/");
-              router.refresh();
-            }}
-          >
-            logout
-          </button>
-        </div>
-      )}
+      <div
+        ref={wrapperRef}
+        className={`absolute top-20 bg-background-with-opacity right-4 h-fit w-fit shadow-btn-main shadow-btn-border rounded-md flex p-4 flex-col ${
+          showMenu ? "scale-0" : "scale-100"
+        } transform transition-all duration-100 ease-in-out`}
+      >
+        <Link href={"/settings"}>settings</Link>
+        <button
+          onClick={async () => {
+            setShowMenu(false);
+
+            await supabase.auth.signOut();
+            router.push("/");
+            router.refresh();
+          }}
+        >
+          logout
+        </button>
+      </div>
     </>
   );
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import SignUp from "@/components/SignUp";
+import SignUp from "@/app/signup/SignUp";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
-import Login from "@/components/Login";
+import Login from "@/app/login/Login";
 
 export default function page() {
   return (

@@ -17,7 +17,6 @@ export default async function page() {
     <div className="flex-1 ">
       <div className="h-fit bg-main bg-fixed bg-cover flex  flex-col">
         <MainCard />
-        <div className="bg-red-500 h-[2000px] w-2/4"></div>
       </div>
     </div>
   );

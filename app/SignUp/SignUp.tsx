@@ -12,6 +12,16 @@ export default function SignUp() {
   const supabase = createClientComponentClient<Database>();
   const formRef = useRef<HTMLFormElement>(null);
 
+  const displayError = (message: string) => {
+    alert(message);
+  };
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event == "SIGNED_IN") {
+      router.push("/");
+    }
+  });
+
   const handleSignUp = async (
     email: string,
     password: string,
@@ -23,21 +33,22 @@ export default function SignUp() {
       data: { user, session },
       error,
     }: AuthResponse = await supabase.auth.signUp({
-      email: "teo.maximilien@gmail.com",
-      password: "123456",
+      email: email,
+      password: password,
       options: {
         emailRedirectTo: `${location.origin}/auth/callback`,
+        data: {
+          first_name: first_name,
+          last_name: last_name,
+          age: age,
+        },
       },
     });
 
-    if (error) throw error.message;
-    supabase.from("profiles").insert({
-      id: user!.id,
-      first_name,
-      last_name,
-      age,
-    });
-    router.refresh();
+    if (error) displayError(error.message);
+    console.log(user, session);
+
+    router.push(`/verifyemail?email=${email}`);
   };
   return (
     <>
@@ -78,6 +89,7 @@ export default function SignUp() {
           id="email"
           className="bg-background p-1 rounded-md border-2 border-btn-border"
           required
+          placeholder="Email"
         />
         <input
           type="password"
@@ -85,6 +97,7 @@ export default function SignUp() {
           id="password"
           className="bg-background p-1 rounded-md border-2 border-btn-border"
           required
+          placeholder="Password"
         />
         <input
           type="text"
@@ -92,6 +105,7 @@ export default function SignUp() {
           id="first_name"
           className="bg-background p-1 rounded-md border-2 border-btn-border"
           required
+          placeholder="First Name"
         />
         <input
           type="text"
@@ -99,6 +113,7 @@ export default function SignUp() {
           id="last_name"
           className="bg-background p-1 rounded-md border-2 border-btn-border"
           required
+          placeholder="Last Name"
         />
         <input
           type="text"
@@ -106,15 +121,16 @@ export default function SignUp() {
           id="age"
           className="bg-background p-1 rounded-md border-2 border-btn-border"
           required
+          placeholder="Age"
         />
         <button
           type="submit"
           className="bg-btn-background border-2 border-btn-border p-2 rounded-lg hover:scale-105 transition-all hover:border-btn-border-hover"
         >
-          Login
+          Sign up
         </button>
-        <Link href="/" className="text-md underline">
-          Sign Up
+        <Link href="/login" className="text-md underline">
+          Login
         </Link>
       </form>
     </>

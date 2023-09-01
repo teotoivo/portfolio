@@ -28,7 +28,7 @@ export default async function RootLayout({
         <div className="pt-16 bg-transparent border-none ">
           {/** must stay othervice header might overlap with other things */}
         </div>
-        <Header user={session?.user!} />
+        <Header />
 
         {children}
       </body>

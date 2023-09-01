@@ -11,13 +11,18 @@ export default function Login() {
   const supabase = createClientComponentClient<Database>();
   const formRef = useRef<HTMLFormElement>(null);
 
+  function displayError(message: string) {
+    alert(message);
+  }
+
   const handleSignIn = async (email: string, password: string) => {
-    await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
     router.push("/");
     router.refresh();
+    if (error) displayError(error.message);
   };
   return (
     <>
@@ -42,12 +47,16 @@ export default function Login() {
           name="email"
           id="email"
           className="bg-background p-1 rounded-md border-2 border-btn-border"
+          required
+          placeholder="Email"
         />
         <input
           type="password"
           name="password"
           id="password"
           className="bg-background p-1 rounded-md border-2 border-btn-border"
+          required
+          placeholder="Password"
         />
         <button
           type="submit"
@@ -55,7 +64,7 @@ export default function Login() {
         >
           Login
         </button>
-        <Link href="/" className="text-md underline">
+        <Link href="/signup" className="text-md underline">
           Sign Up
         </Link>
       </form>

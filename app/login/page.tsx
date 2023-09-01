@@ -3,7 +3,7 @@
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
-import Login from "@/components/Login";
+import Login from "./Login";
 
 export default function page() {
   const router = useRouter();
