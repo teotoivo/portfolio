@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+
 import Link from "next/link";
 import type { Database } from "@/types/supabase";
 
@@ -20,7 +21,7 @@ function useOutsideAlerter(
         !ref.current.contains(event.target as Node) &&
         !otherRef.current!.contains(event.target as Node)
       ) {
-        setShowMenu(true);
+        setShowMenu(false);
       }
     }
     // Bind the event listener
@@ -35,11 +36,16 @@ function useOutsideAlerter(
 export default function UserMenu() {
   const supabase = createClientComponentClient<Database>();
   const router = useRouter();
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
+  const pathname = usePathname();
 
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowMenu, buttonRef);
+
+  useEffect(() => {
+    setShowMenu(false);
+  }, [pathname]);
 
   return (
     <>
@@ -48,13 +54,14 @@ export default function UserMenu() {
         className=" bg-btn-background ml-auto rounded-full  hover:border-btn-border-hover hover:scale-105 ease-in-out duration-200 shadow-btn-main shadow-white"
         onClick={() => setShowMenu(!showMenu)}
       >
+        {" "}
         <img src="/user.png" alt="" className="h-12 dark:invert" />
       </button>
 
       <div
         ref={wrapperRef}
         className={`absolute top-20 bg-background-with-opacity right-4 h-fit w-fit shadow-btn-main shadow-btn-border rounded-md flex p-4 flex-col ${
-          showMenu ? "scale-0" : "scale-100"
+          !showMenu ? "scale-0" : "scale-100"
         } transform transition-all duration-100 ease-in-out`}
       >
         <Link href={"/settings"}>settings</Link>

@@ -25,7 +25,7 @@ export default function MainCard() {
   //loading screen
   return (
     <>
-      <div className="w-full h-[calc(100vh-56px)] flex flex-col items-center justify-center">
+      <div className="flex-1 h-[calc(100vh-56px)] flex flex-col items-center justify-center">
         {loading ? (
           <div
             className={`self-center bg-background-with-opacity w-fit rounded-lg p-10 text-center`}
