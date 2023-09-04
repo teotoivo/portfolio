@@ -20,18 +20,7 @@ export default async function page() {
         <div
           className={`self-center bg-background-with-opacity w-fit rounded-lg p-10  text-center`}
         >
-          <h1 className="">Teo Maximilien</h1>
-          <div className="flex w-full items-center justify-center gap-4">
-            <Link target="_blank" href="https://github.com/teotoivo">
-              <GitIcon className="self-center w-12" />
-            </Link>
-            <Link
-              target="_blank"
-              href="https://www.linkedin.com/in/teo-maximilien/"
-            >
-              <Linkedin className="self-center w-12" />
-            </Link>
-          </div>
+          <h1 className="">Welcome</h1>
         </div>
       </div>
     </div>

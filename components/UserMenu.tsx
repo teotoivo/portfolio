@@ -64,7 +64,9 @@ export default function UserMenu() {
           !showMenu ? "scale-0" : "scale-100"
         } transform transition-all duration-100 ease-in-out`}
       >
-        <Link href={"/settings"}>settings</Link>
+        <Link href={"/settings"}>
+          <p>settings</p>
+        </Link>
         <button
           onClick={async () => {
             setShowMenu(false);
@@ -74,7 +76,7 @@ export default function UserMenu() {
             router.refresh();
           }}
         >
-          logout
+          <p>logout</p>
         </button>
       </div>
     </>

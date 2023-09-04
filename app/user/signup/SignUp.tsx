@@ -50,7 +50,7 @@ export default function SignUp() {
 
     if (error) displayError(error.message);
 
-    router.push(`/verifyemail?email=${email}`);
+    router.push(`/user/verifyemail?email=${email}`);
   };
   return (
     <>
@@ -159,7 +159,7 @@ export default function SignUp() {
           Sign up
         </button>
         <ErrorComponent error={error} />
-        <Link href="/login" className="text-md underline">
+        <Link href="/user/login" className="text-md underline">
           Login
         </Link>
       </form>

@@ -28,7 +28,7 @@ export default function page() {
     if (error) console.log(error);
 
     if (data) {
-      router.push("/");
+      router.push("/user");
       router.refresh();
     }
   }

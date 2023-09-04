@@ -64,7 +64,7 @@ export default function Login() {
         >
           Login
         </button>
-        <Link href="/signup" className="text-md underline">
+        <Link href="/user/signup" className="text-md underline">
           Sign Up
         </Link>
       </form>

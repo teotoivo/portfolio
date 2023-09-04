@@ -31,6 +31,26 @@
   }
   * {
     color: var(--text-primary);
-    font-family: Georgia, Times, "Times New Roman", serif;
+  }
+
+  body {
+    font-family: "Proza Libre", serif;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+  h1 {
+    font-size: 2rem;
+    font-family: "Cormorant Garamond", serif;
+  }
+
+  @media (width > 768px) {
+    p {
+      font-size: 1.5rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
   }
 }
