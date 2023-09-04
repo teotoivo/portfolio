@@ -35,35 +35,37 @@ export default function page() {
 
   return (
     <>
-      <div className="rounded-md bg-background-with-opacity p-10 flex flex-col justify-center items-center">
-        <p>Verify email</p>
-        <form
-          className="flex flex-col justify-center items-center gap-4"
-          action=""
-          ref={formRef}
-        >
-          <input
-            type="text"
-            name="code"
-            id="code"
-            placeholder="verification code"
-            className="bg-background p-1 rounded-md border-2 border-btn-border"
-            inputMode="numeric"
-            pattern="[0-9]{6}"
-          />
-          <button
-            className="bg-btn-background rounded-md p-2 px-4 text-white"
-            onClick={(e) => {
-              e.preventDefault();
-              const code = formRef.current?.elements.namedItem(
-                "code"
-              ) as HTMLInputElement;
-              handleVerify(code);
-            }}
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <div className="rounded-md bg-background-with-opacity p-10 flex flex-col justify-center items-center">
+          <p>Verify email</p>
+          <form
+            className="flex flex-col justify-center items-center gap-4"
+            action=""
+            ref={formRef}
           >
-            Verify
-          </button>
-        </form>
+            <input
+              type="text"
+              name="code"
+              id="code"
+              placeholder="verification code"
+              className="bg-background p-1 rounded-md border-2 border-btn-border"
+              inputMode="numeric"
+              pattern="[0-9]{6}"
+            />
+            <button
+              className="bg-btn-background rounded-md p-2 px-4 text-white"
+              onClick={(e) => {
+                e.preventDefault();
+                const code = formRef.current?.elements.namedItem(
+                  "code"
+                ) as HTMLInputElement;
+                handleVerify(code);
+              }}
+            >
+              Verify
+            </button>
+          </form>
+        </div>
       </div>
     </>
   );

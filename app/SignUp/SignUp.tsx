@@ -1,19 +1,22 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import Link from "next/link";
 import { AuthResponse } from "@supabase/supabase-js";
+import ErrorComponent from "@/components/ErrorComponent";
 
 export default function SignUp() {
   const router = useRouter();
   const supabase = createClientComponentClient<Database>();
   const formRef = useRef<HTMLFormElement>(null);
+  const [isPassValid, setIsPassValid] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const displayError = (message: string) => {
-    alert(message);
+    setError(message);
   };
 
   supabase.auth.onAuthStateChange((event, session) => {
@@ -46,7 +49,6 @@ export default function SignUp() {
     });
 
     if (error) displayError(error.message);
-    console.log(user, session);
 
     router.push(`/verifyemail?email=${email}`);
   };
@@ -65,6 +67,9 @@ export default function SignUp() {
           const password = formRef.current?.elements.namedItem(
             "password"
           ) as HTMLInputElement;
+          const confirm_password = formRef.current?.elements.namedItem(
+            "confirm_password"
+          ) as HTMLInputElement;
           const first_name = formRef.current?.elements.namedItem(
             "first_name"
           ) as HTMLInputElement;
@@ -74,13 +79,17 @@ export default function SignUp() {
           const age = formRef.current?.elements.namedItem(
             "age"
           ) as HTMLInputElement;
-          handleSignUp(
-            email.value,
-            password.value,
-            first_name.value,
-            last_name.value,
-            age.value
-          );
+          if (password.value === confirm_password.value) {
+            handleSignUp(
+              email.value,
+              password.value,
+              first_name.value,
+              last_name.value,
+              age.value
+            );
+          } else {
+            displayError("Passwords do not match");
+          }
         }}
       >
         <input
@@ -98,6 +107,26 @@ export default function SignUp() {
           className="bg-background p-1 rounded-md border-2 border-btn-border"
           required
           placeholder="Password"
+        />
+        <input
+          type="password"
+          name="confirm_password"
+          id="confirm_password"
+          className={`focus:outline-none bg-background p-1 rounded-md border-2 border-btn-border ${
+            isPassValid ? "border-green-500" : "border-red-500"
+          }`}
+          required
+          placeholder="Confirm Password"
+          onChange={(e) => {
+            const password = formRef.current?.elements.namedItem(
+              "password"
+            ) as HTMLInputElement;
+            if (e.target.value === password.value) {
+              setIsPassValid(true);
+            } else {
+              setIsPassValid(false);
+            }
+          }}
         />
         <input
           type="text"
@@ -129,6 +158,7 @@ export default function SignUp() {
         >
           Sign up
         </button>
+        <ErrorComponent error={error} />
         <Link href="/login" className="text-md underline">
           Login
         </Link>
