@@ -22,6 +22,15 @@ module.exports = {
       boxShadow: {
         "btn-main": "0 0 14px -10px var(--btn-border)",
       },
+      keyframes: {
+        navbarDissapear: {
+          "0%": { transform: "translateY(0)" },
+          "100%": { transform: "translateY(-100%)" },
+        },
+      },
+      animation: {
+        navbarDissapear: "navbarDissapear auto ease-in-out",
+      },
     },
   },
   plugins: [],

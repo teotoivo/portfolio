@@ -27,9 +27,6 @@ export default async function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className="flex flex-col min-h-screen m-0 overflow-x-hidden">
-        <div className="pt-16 bg-transparent border-none ">
-          {/** must stay othervice header might overlap with other things */}
-        </div>
         <Header />
         <div className="flex-1 bg-main bg-fixed bg-cover flex  flex-col">
           {children}

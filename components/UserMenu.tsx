@@ -51,7 +51,7 @@ export default function UserMenu() {
     <>
       <button
         ref={buttonRef}
-        className=" bg-btn-background ml-auto rounded-full  hover:border-btn-border-hover hover:scale-105 ease-in-out duration-200 shadow-btn-main shadow-white"
+        className=" bg-btn-background rounded-full  hover:border-btn-border-hover hover:scale-105 ease-in-out duration-200 shadow-btn-main shadow-white"
         onClick={() => setShowMenu(!showMenu)}
       >
         {" "}
