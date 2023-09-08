@@ -1,15 +1,24 @@
 import React from "react";
-//link
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { User } from "@supabase/supabase-js";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import UserMenu from "./UserMenu";
 import type { Database } from "@/types/supabase";
+import LoginButton from "./LoginButton";
+import { GitIcon, Linkedin } from "@/components/Icons";
+
+export const dynamic = "force-dynamic";
 
 export default async function Header() {
   const supabase = createServerComponentClient<Database>({ cookies });
+
+  const headersList = headers();
+  // read the custom x-url header
+  const header_url = headersList.get("x-url") || "";
+  // get the first route
+  const route = header_url.split("/")[3];
 
   let {
     data: { session },
@@ -28,21 +37,31 @@ export default async function Header() {
 
   //logout route /auth/logOut
   return (
-    <header className="w-full h-16 flex bg-background items-center px-6 fixed top-0 shadow-2xl shadow-background">
-      <Link href="/">
-        <div>test</div>
-      </Link>
-
-      {session?.user ? (
-        <UserMenu />
-      ) : (
+    <>
+      <div className="absolute top-0 grid h-16 w-full grid-flow-col items-center gap-4 bg-background-with-opacity px-6"></div>
+      <header className="fixed top-0 grid h-16 w-full  grid-flow-col items-center gap-4 px-6">
         <Link
-          href="./login"
-          className="bg-btn-background ml-auto rounded-3xl border-2 p-3 px-5 hover:border-btn-border-hover hover:scale-105 ease-in-out duration-200 border-btn-border shadow-btn-main shadow-white"
+          className="justify-self-start"
+          href={route === "user" ? "/user" : "/"}
         >
-          Login
+          <h1 className="transition-all duration-150 ease-in-out hover:scale-105 hover:underline">
+            Home
+          </h1>
         </Link>
-      )}
-    </header>
+        <div className="flex h-full items-center gap-4 justify-self-end">
+          <Link target="_blank" href="https://github.com/teotoivo" className="">
+            <GitIcon className="w-12 self-center transition-all duration-150 ease-in-out hover:scale-110 hover:opacity-90" />
+          </Link>
+          <Link
+            target="_blank"
+            href="https://www.linkedin.com/in/teo-maximilien/"
+            className="justify-self-cente transition-all duration-150 ease-in-out hover:scale-110 hover:opacity-90"
+          >
+            <Linkedin className="w-12" />
+          </Link>
+          <LoginButton session={session} />
+        </div>
+      </header>
+    </>
   );
 }
