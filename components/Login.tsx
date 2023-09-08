@@ -29,7 +29,6 @@ export const bgVariants: Variants = {
 };
 
 export const formVariants: Variants = {
-  initial: {},
   animate: {
     transition: {
       staggerChildren: 0.2,
@@ -53,7 +52,7 @@ export const formChildVariants: Variants = {
     transition: {
       duration: 0.3,
       type: "spring",
-      weight: 0.5,
+      mass: 0.5,
     },
   },
   exit: {
