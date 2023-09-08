@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .test {
-    @apply text-red-500;
-  }
-}
-
 @layer base {
   :root {
     --background: 19, 19, 19;

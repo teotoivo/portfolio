@@ -15,16 +15,15 @@ export default async function page() {
 
   return (
     <>
-      <div className="h-screen flex flex-col items-center justify-center ">
-        <div className="self-center flex-col flex max-w-[90%]">
+      <div className="flex h-screen flex-col items-center justify-center ">
+        <div className="flex max-w-[90%] flex-col self-center">
           <div
-            className={` self-center bg-background-with-opacity w-fit rounded-lg p-16  text-center`}
+            className={` w-fit self-center rounded-lg bg-background-with-opacity p-16  text-center`}
           >
             <h1 className="">Teo Maximilien</h1>
           </div>
         </div>
       </div>
-      <div className="h-[1000px] bg-red-500 w-1/2"></div>
     </>
   );
 }

@@ -10,6 +10,10 @@ import ErrorComponent from "@/components/ErrorComponent";
 
 import OutsideAlerter from "./OutsideAlerter";
 
+import { Variants, motion } from "framer-motion";
+
+import { bgVariants, formChildVariants, formVariants } from "./Login";
+
 export default function SignUp({
   setShowLogin,
   setShowSignup,
@@ -61,11 +65,23 @@ export default function SignUp({
     router.push(`/user/verifyemail?email=${email}`);
   };
   return (
-    <>
-      <div className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center bg-background-with-opacity">
+    <motion.div
+      className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center bg-background-with-opacity"
+      variants={bgVariants}
+      key={"signup"}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
+      <OutsideAlerter
+        callback={() => {
+          setShowSignup(false);
+        }}
+      >
         <div className=" flex h-fit w-fit flex-col items-center justify-center rounded-md bg-background-with-opacity p-10">
           <p>Sign Up</p>
-          <form
+          <motion.form
+            variants={formVariants}
             className="flex flex-col items-center justify-center gap-4"
             action=""
             ref={formRef}
@@ -102,7 +118,8 @@ export default function SignUp({
               }
             }}
           >
-            <input
+            <motion.input
+              variants={formChildVariants}
               type="text"
               name="email"
               id="email"
@@ -110,7 +127,8 @@ export default function SignUp({
               required
               placeholder="Email"
             />
-            <input
+            <motion.input
+              variants={formChildVariants}
               type="password"
               name="password"
               id="password"
@@ -118,7 +136,8 @@ export default function SignUp({
               required
               placeholder="Password"
             />
-            <input
+            <motion.input
+              variants={formChildVariants}
               type="password"
               name="confirm_password"
               id="confirm_password"
@@ -138,7 +157,8 @@ export default function SignUp({
                 }
               }}
             />
-            <input
+            <motion.input
+              variants={formChildVariants}
               type="text"
               name="first_name"
               id="first_name"
@@ -146,7 +166,8 @@ export default function SignUp({
               required
               placeholder="First Name"
             />
-            <input
+            <motion.input
+              variants={formChildVariants}
               type="text"
               name="last_name"
               id="last_name"
@@ -154,7 +175,8 @@ export default function SignUp({
               required
               placeholder="Last Name"
             />
-            <input
+            <motion.input
+              variants={formChildVariants}
               type="text"
               name="age"
               id="age"
@@ -162,14 +184,16 @@ export default function SignUp({
               required
               placeholder="Age"
             />
-            <button
+            <motion.button
+              variants={formChildVariants}
               type="submit"
               className="rounded-lg border-2 border-btn-border bg-btn-background p-2 transition-all hover:scale-105 hover:border-btn-border-hover"
             >
               Sign up
-            </button>
+            </motion.button>
             <ErrorComponent error={error} />
-            <button
+            <motion.button
+              variants={formChildVariants}
               className="text-md underline"
               onClick={() => {
                 setShowSignup(false);
@@ -177,10 +201,10 @@ export default function SignUp({
               }}
             >
               Login
-            </button>
-          </form>
+            </motion.button>
+          </motion.form>
         </div>
-      </div>
-    </>
+      </OutsideAlerter>
+    </motion.div>
   );
 }

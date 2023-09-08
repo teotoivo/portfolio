@@ -3,14 +3,17 @@ import React, { useRef, useEffect } from "react";
 /**
  * Hook that alerts clicks outside of the passed ref
  */
-function useOutsideAlerter(ref: React.RefObject<HTMLDivElement>) {
+function useOutsideAlerter(
+  ref: React.RefObject<HTMLDivElement>,
+  callback: () => void,
+) {
   useEffect(() => {
     /**
      * Alert if clicked on outside of element
      */
     function handleClickOutside(event: MouseEvent) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        alert("You clicked outside of me!");
+        callback();
       }
     }
     // Bind the event listener
@@ -25,9 +28,15 @@ function useOutsideAlerter(ref: React.RefObject<HTMLDivElement>) {
 /**
  * Component that alerts if you click outside of it
  */
-export default function OutsideAlerter(props: React.PropsWithChildren<{}>) {
+export default function OutsideAlerter({
+  children,
+  callback,
+}: {
+  children: React.ReactNode;
+  callback: () => void;
+}) {
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef);
+  useOutsideAlerter(wrapperRef, callback);
 
-  return <div ref={wrapperRef}>{props.children}</div>;
+  return <div ref={wrapperRef}>{children}</div>;
 }
