@@ -21,7 +21,7 @@ export default function SignUp() {
 
   supabase.auth.onAuthStateChange((event, session) => {
     if (event == "SIGNED_IN") {
-      router.push("/");
+      router.push("/user");
     }
   });
 
@@ -39,7 +39,7 @@ export default function SignUp() {
       email: email,
       password: password,
       options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
+        emailRedirectTo: `${location.origin}/user/auth/callback`,
         data: {
           first_name: first_name,
           last_name: last_name,

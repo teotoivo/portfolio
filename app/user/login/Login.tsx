@@ -20,7 +20,7 @@ export default function Login() {
       email: email,
       password: password,
     });
-    router.push("/");
+    router.push("/user");
     router.refresh();
     if (error) displayError(error.message);
   };

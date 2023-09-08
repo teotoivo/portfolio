@@ -14,14 +14,9 @@ export default function page() {
       email: "teo.maximilien@gmail.com",
       password: "123456",
       options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
+        emailRedirectTo: `${location.origin}/user/auth/callback`,
       },
     });
-    router.refresh();
-  };
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
     router.refresh();
   };
 

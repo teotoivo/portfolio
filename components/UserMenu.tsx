@@ -9,7 +9,7 @@ import type { Database } from "@/types/supabase";
 function useOutsideAlerter(
   ref: React.RefObject<HTMLDivElement>,
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>,
-  otherRef: React.RefObject<HTMLDivElement>
+  otherRef: React.RefObject<HTMLDivElement>,
 ) {
   useEffect(() => {
     /**
@@ -51,7 +51,7 @@ export default function UserMenu() {
     <>
       <button
         ref={buttonRef}
-        className=" bg-btn-background rounded-full  hover:border-btn-border-hover hover:scale-105 ease-in-out duration-200 shadow-btn-main shadow-white"
+        className=" rounded-full bg-btn-background  shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
         onClick={() => setShowMenu(!showMenu)}
       >
         {" "}
@@ -60,7 +60,7 @@ export default function UserMenu() {
 
       <div
         ref={wrapperRef}
-        className={`absolute top-20 bg-background-with-opacity right-4 h-fit w-fit shadow-btn-main shadow-btn-border rounded-md flex p-4 flex-col ${
+        className={`absolute right-4 top-20 flex h-fit w-fit flex-col rounded-md bg-background-with-opacity p-4 shadow-btn-main shadow-btn-border ${
           !showMenu ? "scale-0" : "scale-100"
         } transform transition-all duration-100 ease-in-out`}
       >
@@ -72,7 +72,7 @@ export default function UserMenu() {
             setShowMenu(false);
 
             await supabase.auth.signOut();
-            router.push("/");
+            router.push("/user");
             router.refresh();
           }}
         >
