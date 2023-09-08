@@ -1,9 +1,9 @@
 import React from "react";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import Link from "next/link";
 import type { Database } from "@/types/supabase";
+
+import ItemCaroussel from "@/components/ItemCaroussel";
 
 export default async function page() {
   const supabase = createServerComponentClient<Database>({ cookies });
@@ -13,17 +13,63 @@ export default async function page() {
 
   const { data: countries } = await supabase.from("countries").select();
 
+  //get age from bday 07.11.2005
+  const age = Math.floor(
+    (new Date().getTime() - new Date("2005-11-07").getTime()) /
+      1000 /
+      60 /
+      60 /
+      24 /
+      365,
+  );
+
   return (
     <>
-      <div className="flex h-screen flex-col items-center justify-center ">
-        <div className="flex max-w-[90%] flex-col self-center">
-          <div
-            className={` w-fit self-center rounded-lg bg-background-with-opacity p-16  text-center`}
-          >
-            <h1 className="">Teo Maximilien</h1>
+      <section id="main">
+        <div className="flex h-screen flex-col items-center justify-center">
+          <div className="flex max-w-[90%] flex-col self-center">
+            <div
+              className={` w-fit self-center rounded-lg bg-background-with-opacity p-16  text-center`}
+            >
+              <h1 className="">Teo Maximilien</h1>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+      <section id="about">
+        <div>
+          <picture>
+            <source
+              srcSet="/darkWaves.svg"
+              media="(prefers-color-scheme: dark)"
+            />
+            <img src="/lightWaves.svg" alt="wave divider" />
+          </picture>
+          <div className="flex w-full flex-col items-center gap-6 bg-background p-10">
+            <h1 className="underline">About me</h1>
+            <p className="text-center align-middle text-base">
+              Im a {age} year old student studying software devlopment at
+              Business College Helsinki in Finland. I have been programming for
+              about 3 years now. I like coding on my free time and i also like
+              gym climbing and going to the gym.
+            </p>
+          </div>
+          <picture>
+            <source
+              srcSet="/darkWaves.svg"
+              media="(prefers-color-scheme: dark)"
+            />
+            <img
+              className="rotate-180"
+              src="/lightWaves.svg"
+              alt="wave divider"
+            />
+          </picture>
+        </div>
+      </section>
+      <section id="skills" className="flex h-screen justify-center">
+        <ItemCaroussel />
+      </section>
     </>
   );
 }
