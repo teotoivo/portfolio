@@ -2,14 +2,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter, usePathname } from "next/navigation";
+import { motion, Variants } from "framer-motion";
 
 import Link from "next/link";
 import type { Database } from "@/types/supabase";
 
+const itemVariants: Variants = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 300, damping: 24, duration: 0.4 },
+  },
+  closed: { opacity: 0, y: 20, transition: { duration: 0.4 } },
+};
+
 function useOutsideAlerter(
   ref: React.RefObject<HTMLDivElement>,
   setShowMenu: React.Dispatch<React.SetStateAction<boolean>>,
-  otherRef: React.RefObject<HTMLDivElement>
+  otherRef: React.RefObject<HTMLDivElement>,
 ) {
   useEffect(() => {
     /**
@@ -41,44 +51,64 @@ export default function UserMenu() {
 
   const wrapperRef = useRef(null);
   const buttonRef = useRef(null);
+
   useOutsideAlerter(wrapperRef, setShowMenu, buttonRef);
 
-  useEffect(() => {
-    setShowMenu(false);
-  }, [pathname]);
-
   return (
-    <>
-      <button
+    <motion.div initial={false} animate={showMenu ? "open" : "closed"}>
+      <motion.button
         ref={buttonRef}
-        className=" bg-btn-background rounded-full  hover:border-btn-border-hover hover:scale-105 ease-in-out duration-200 shadow-btn-main shadow-white"
+        className=" rounded-full bg-btn-background  shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
         onClick={() => setShowMenu(!showMenu)}
+        whileTap={{ scale: 0.9 }}
       >
         {" "}
         <img src="/user.png" alt="" className="h-12 dark:invert" />
-      </button>
+      </motion.button>
 
-      <div
+      <motion.ul
         ref={wrapperRef}
-        className={`absolute top-20 bg-background-with-opacity right-4 h-fit w-fit shadow-btn-main shadow-btn-border rounded-md flex p-4 flex-col ${
-          !showMenu ? "scale-0" : "scale-100"
-        } transform transition-all duration-100 ease-in-out`}
+        className={`absolute right-4 top-20 flex h-fit w-fit flex-col rounded-md bg-background-with-opacity p-4 shadow-btn-main shadow-btn-border`}
+        variants={{
+          open: {
+            clipPath: "inset(0% 0% 0% 0% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.7,
+              delayChildren: 0.3,
+              staggerChildren: 0.05,
+            },
+          },
+          closed: {
+            clipPath: "inset(10% 50% 90% 50% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.7,
+            },
+          },
+        }}
       >
-        <Link href={"/settings"}>
-          <p>settings</p>
-        </Link>
-        <button
-          onClick={async () => {
-            setShowMenu(false);
+        <motion.li variants={itemVariants}>
+          <Link href={"/user/settings"}>
+            <p>settings</p>
+          </Link>
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <button
+            onClick={async () => {
+              setShowMenu(false);
 
-            await supabase.auth.signOut();
-            router.push("/");
-            router.refresh();
-          }}
-        >
-          <p>logout</p>
-        </button>
-      </div>
-    </>
+              await supabase.auth.signOut();
+              router.push("/user");
+              router.refresh();
+            }}
+          >
+            <p>logout</p>
+          </button>
+        </motion.li>
+      </motion.ul>
+    </motion.div>
   );
 }

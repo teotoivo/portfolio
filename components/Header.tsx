@@ -15,6 +15,10 @@ export default async function Header() {
   const supabase = createServerComponentClient<Database>({ cookies });
 
   const headersList = headers();
+  // read the custom x-url header
+  const header_url = headersList.get("x-url") || "";
+  // get the first route
+  const route = header_url.split("/")[3];
 
   let {
     data: { session },
@@ -34,21 +38,24 @@ export default async function Header() {
   //logout route /auth/logOut
   return (
     <>
-      <div className="w-full gap-4 h-16 grid grid-flow-col  items-center px-6 top-0 bg-background-with-opacity absolute"></div>
-      <header className="w-full gap-4 h-16 grid grid-flow-col  items-center px-6 fixed top-0">
-        <Link className="justify-self-start" href="/">
-          <h1 className="hover:underline hover:scale-105 transition-all duration-150 ease-in-out">
+      <div className="absolute top-0 grid h-16 w-full grid-flow-col items-center gap-4 bg-background-with-opacity px-6"></div>
+      <header className="fixed top-0 grid h-16 w-full  grid-flow-col items-center gap-4 px-6">
+        <Link
+          className="justify-self-start"
+          href={route === "user" ? "/user" : "/"}
+        >
+          <h1 className="transition-all duration-150 ease-in-out hover:scale-105 hover:underline">
             Home
           </h1>
         </Link>
-        <div className="flex justify-self-end gap-4 h-full items-center">
+        <div className="flex h-full items-center gap-4 justify-self-end">
           <Link target="_blank" href="https://github.com/teotoivo" className="">
-            <GitIcon className="self-center w-12 hover:scale-110 transition-all duration-150 ease-in-out hover:opacity-90" />
+            <GitIcon className="w-12 self-center transition-all duration-150 ease-in-out hover:scale-110 hover:opacity-90" />
           </Link>
           <Link
             target="_blank"
             href="https://www.linkedin.com/in/teo-maximilien/"
-            className="justify-self-center hover:scale-110 transition-all duration-150 ease-in-out hover:opacity-90"
+            className="justify-self-cente transition-all duration-150 ease-in-out hover:scale-110 hover:opacity-90"
           >
             <Linkedin className="w-12" />
           </Link>

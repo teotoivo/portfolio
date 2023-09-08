@@ -10,7 +10,7 @@ export default async function Unauthenticated() {
   } = await supabase.auth.getSession();
 
   if (session) {
-    redirect("/");
+    redirect("/user");
   }
 
   return <p>Please sign in before accessing this page!</p>;

@@ -26,7 +26,7 @@ export default function NavBg() {
   return (
     <div
       ref={ref}
-      className={`w-full gap-4 h-16 grid grid-flow-col bg-background-with-opacity items-center px-6 fixed top-0 shadow-2xl shadow-background ${
+      className={`fixed top-0 grid h-16 w-full grid-flow-col items-center gap-4 bg-background-with-opacity px-6 shadow-2xl shadow-background ${
         isVisible ? "-translate-y-24" : "translate-y-0"
       } transition-all duration-500 ease-in-out`}
     ></div>
