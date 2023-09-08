@@ -118,6 +118,7 @@ export default function Login({
               const password = formRef.current?.elements.namedItem(
                 "password",
               ) as HTMLInputElement;
+              setShowLogin(false);
               handleSignIn(email.value, password.value);
             }}
           >
