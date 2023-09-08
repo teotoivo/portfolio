@@ -106,6 +106,7 @@ export default function SignUp({
                 "age",
               ) as HTMLInputElement;
               if (password.value === confirm_password.value) {
+                setShowSignup(false);
                 handleSignUp(
                   email.value,
                   password.value,
