@@ -1,6 +1,6 @@
-import "./globals.css";
+import "../globals.css";
 
-import Header from "../components/Header";
+import Header from "./components/Header";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

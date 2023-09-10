@@ -55,14 +55,17 @@ export default function UserMenu() {
   useOutsideAlerter(wrapperRef, setShowMenu, buttonRef);
 
   return (
-    <motion.div initial={false} animate={showMenu ? "open" : "closed"}>
+    <motion.div
+      initial={false}
+      animate={showMenu ? "open" : "closed"}
+      className=" h-12"
+    >
       <motion.button
         ref={buttonRef}
-        className=" rounded-full bg-btn-background  shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
+        className=" bg-btn-background  shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
         onClick={() => setShowMenu(!showMenu)}
         whileTap={{ scale: 0.9 }}
       >
-        {" "}
         <img src="/user.png" alt="" className="h-12 dark:invert" />
       </motion.button>
 
@@ -95,7 +98,7 @@ export default function UserMenu() {
             <p>settings</p>
           </Link>
         </motion.li>
-        <motion.li variants={itemVariants}>
+        <motion.li variants={itemVariants} className="">
           <button
             onClick={async () => {
               setShowMenu(false);

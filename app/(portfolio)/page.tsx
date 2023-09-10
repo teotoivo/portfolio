@@ -1,12 +1,14 @@
+"use client";
+
 import React from "react";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 import type { Database } from "@/types/supabase";
 
-import ItemCaroussel from "@/components/ItemCaroussel";
+import ItemCaroussel from "@/app/(portfolio)/components/ItemCaroussel";
 
 export default async function page() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const supabase = createClientComponentClient<Database>();
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -60,14 +62,14 @@ export default async function page() {
               media="(prefers-color-scheme: dark)"
             />
             <img
-              className="rotate-180"
+              className=" rotate-180"
               src="/lightWaves.svg"
               alt="wave divider"
             />
           </picture>
         </div>
       </section>
-      <section id="skills" className="flex h-screen justify-center">
+      <section id="skills" className="flex min-h-screen justify-center">
         <ItemCaroussel />
       </section>
     </>

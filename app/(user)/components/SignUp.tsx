@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import Link from "next/link";
 import { AuthResponse } from "@supabase/supabase-js";
-import ErrorComponent from "@/components/ErrorComponent";
+import ErrorComponent from "@/app/(user)/components/ErrorComponent";
 
-import OutsideAlerter from "./OutsideAlerter";
+import OutsideAlerter from "../../../components/OutsideAlerter";
 
 import { Variants, motion } from "framer-motion";
 
