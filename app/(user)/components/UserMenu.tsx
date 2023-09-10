@@ -6,6 +6,7 @@ import { motion, Variants } from "framer-motion";
 
 import Link from "next/link";
 import type { Database } from "@/types/supabase";
+import { UserIcon } from "@/components/Icons";
 
 const itemVariants: Variants = {
   open: {
@@ -62,11 +63,11 @@ export default function UserMenu() {
     >
       <motion.button
         ref={buttonRef}
-        className=" bg-btn-background  shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
+        className="shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
         onClick={() => setShowMenu(!showMenu)}
         whileTap={{ scale: 0.9 }}
       >
-        <img src="/user.png" alt="" className="h-12 dark:invert" />
+        <UserIcon className="h-12 w-12" />
       </motion.button>
 
       <motion.ul
