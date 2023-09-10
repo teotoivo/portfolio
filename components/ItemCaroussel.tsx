@@ -3,43 +3,42 @@
 import React, { useEffect, useState } from "react";
 import { Variants, motion, useAnimate, useAnimation } from "framer-motion";
 import CarousselItem from "./CarousselItem";
+import {
+  CssIcon,
+  FramerMotionIcon,
+  HtmlIcon,
+  JsIcon,
+  NextJsIcon,
+  NodejsIcon,
+  ReactIcon,
+  SqlIcon,
+  TailwindIcon,
+  TsIcon,
+} from "./Icons";
+type skillItem = [
+  string,
+  (props: React.SVGProps<SVGSVGElement>) => React.ReactElement,
+];
 
 export default function ItemCaroussel() {
-  const [scope, animate] = useAnimate();
   const skills = [
-    ["HTML", ""],
-    ["CSS"],
-    ["JavaScript", ""],
-    ["React", ""],
-    ["Next.js", ""],
-    ["TailwindCSS", ""],
-    ["Framer Motion", ""],
-    ["TypeScript", ""],
-    ["Node.js", ""],
-    ["Express.js", ""],
-    ["SQL", ""],
-  ];
-
-  const [windowWidth, setWindowWidth] = useState(0);
-
-  useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", () => {
-      setWindowWidth(window.innerWidth);
-    });
-
-    return () => {
-      window.removeEventListener("resize", () => {
-        setWindowWidth(window.innerWidth);
-      });
-    };
-  }, []);
+    ["HTML", HtmlIcon],
+    ["CSS", CssIcon],
+    ["JavaScript", JsIcon],
+    ["React", ReactIcon],
+    ["Next.js", NextJsIcon],
+    ["TailwindCSS", TailwindIcon],
+    ["Framer Motion", FramerMotionIcon],
+    ["TypeScript", TsIcon],
+    ["Node.js", NodejsIcon],
+    ["SQL", SqlIcon],
+  ] as skillItem[];
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-14">
+    <div className=" flex w-full flex-col items-center justify-center gap-14">
       <h1 className="underline">Skills</h1>
       <div className="w-full">
-        <div className="relative m-2 hidden h-48  gap-4  md:flex">
+        <div className="mx-4 flex flex-row flex-wrap gap-4">
           {skills.map((skillItem, index) => {
             return (
               <CarousselItem
@@ -47,25 +46,10 @@ export default function ItemCaroussel() {
                 skillItem={skillItem}
                 index={index}
                 skills={skills}
-                animate1={[animate, scope]}
               />
             );
           })}
         </div>
-      </div>
-      <div className="m-2 flex flex-wrap gap-4 md:hidden">
-        {skills.map((skillItem) => {
-          const skill = skillItem[0] as string;
-
-          return (
-            <motion.div
-              key={skill}
-              className="rounded-md bg-background-with-opacity p-4"
-            >
-              <p>{skill}</p>
-            </motion.div>
-          );
-        })}
       </div>
     </div>
   );

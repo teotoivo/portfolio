@@ -29,7 +29,7 @@ export default function LoginButton({ session }: { session: Session | null }) {
             <UserMenu />
           ) : (
             <button
-              className="rounded-3xl border-2 border-btn-border bg-btn-background p-1 px-5 shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
+              className="rounded-3xl border-2 border-btn-border bg-btn-background p-1 px-5 shadow-btn-main"
               onClick={() => setShowLogin(!showLogin)}
             >
               <p>Login</p>

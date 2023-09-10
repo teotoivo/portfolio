@@ -1,67 +1,211 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { cookies, headers } from "next/headers";
-import { User } from "@supabase/supabase-js";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Session, User } from "@supabase/supabase-js";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import UserMenu from "./UserMenu";
 import type { Database } from "@/types/supabase";
 import LoginButton from "./LoginButton";
 import { GitIcon, Linkedin } from "@/components/Icons";
+import { usePathname } from "next/navigation";
+import { Variants, motion } from "framer-motion";
 
 export const dynamic = "force-dynamic";
 
-export default async function Header() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+const bgVariant: Variants = {
+  initial: {
+    opacity: 0,
+    y: -100,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      type: "spring",
+    },
+  },
+};
+const ItemContainerVariant: Variants = {
+  animate: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
-  const headersList = headers();
-  // read the custom x-url header
-  const header_url = headersList.get("x-url") || "";
-  // get the first route
-  const route = header_url.split("/")[3];
+const itemTransition = {
+  duration: 0.2,
+  type: "spring",
+  mass: 1,
+  stiffness: 120,
+  damping: 18,
+};
+const sharedInitial = {
+  opacity: 0,
+};
+const sharedAnimate = {
+  opacity: 1,
+  transition: itemTransition,
+  x: 0,
+};
+const sharedExit = {
+  opacity: 0,
+  transition: itemTransition,
+};
 
-  let {
-    data: { session },
-  } = await supabase.auth.getSession();
+const itemHover = {
+  scale: 1.1,
+  opacity: 0.8,
+  transition: {
+    duration: 0.2,
+    type: "spring",
+  },
+};
+const noItemHover = {
+  scale: 1,
+  opacity: 1,
+  transition: {
+    duration: 0.2,
+    type: "spring",
+  },
+};
 
-  //rename the session param to newSession
+const itemVariantLeft: Variants = {
+  initial: {
+    x: "-100vw",
+    ...sharedInitial,
+  },
+  animate: {
+    ...sharedAnimate,
+  },
+  exit: {
+    x: "-100vw",
+    ...sharedExit,
+  },
+};
 
-  supabase.auth.onAuthStateChange(async (event, newSession) => {
-    if (event == "SIGNED_IN") {
-      session = newSession;
+const itemVariantRight: Variants = {
+  initial: {
+    x: "100vw",
+    ...sharedInitial,
+  },
+  animate: {
+    ...sharedAnimate,
+  },
+  exit: {
+    x: "100vw",
+    ...sharedExit,
+  },
+};
+
+export default function Header() {
+  const supabase = createClientComponentClient<Database>();
+
+  const path = usePathname();
+
+  const route = path.split("/")[1];
+
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    async function getSession() {
+      const {
+        data: { session: session1 },
+      } = await supabase.auth.getSession();
+      setSession(session1);
     }
-    if (event == "SIGNED_OUT") {
-      session = null;
-    }
-  });
+    getSession();
+    supabase.auth.onAuthStateChange(async (event, newSession) => {
+      if (event == "SIGNED_IN") {
+        setSession(newSession);
+      }
+      if (event == "SIGNED_OUT") {
+        setSession(null);
+      }
+    });
+  }, []);
 
   //logout route /auth/logOut
   return (
-    <>
-      <div className="absolute top-0 grid h-16 w-full grid-flow-col items-center gap-4 bg-background-with-opacity px-6"></div>
-      <header className="fixed top-0 grid h-16 w-full  grid-flow-col items-center gap-4 px-6">
-        <Link
-          className="justify-self-start"
-          href={route === "user" ? "/user" : "/"}
-        >
-          <h1 className="transition-all duration-150 ease-in-out hover:scale-105 hover:underline">
-            Home
-          </h1>
-        </Link>
-        <div className="flex h-full items-center gap-4 justify-self-end">
-          <Link target="_blank" href="https://github.com/teotoivo" className="">
-            <GitIcon className="w-12 self-center transition-all duration-150 ease-in-out hover:scale-110 hover:opacity-90" />
-          </Link>
+    <motion.div initial="initial" animate="animate" exit="exit">
+      <motion.div
+        variants={bgVariant}
+        className="absolute top-0 grid h-16 w-full grid-flow-col items-center gap-4 bg-background-with-opacity px-6"
+      ></motion.div>
+      <motion.header
+        variants={ItemContainerVariant}
+        className="fixed top-0 z-50 grid h-16  w-full grid-flow-col items-center gap-4 px-6"
+      >
+        <motion.div variants={itemVariantLeft}>
           <Link
-            target="_blank"
-            href="https://www.linkedin.com/in/teo-maximilien/"
-            className="justify-self-cente transition-all duration-150 ease-in-out hover:scale-110 hover:opacity-90"
+            className="justify-self-start"
+            href={route === "user" ? "/user" : "/"}
           >
-            <Linkedin className="w-12" />
+            <motion.h1
+              initial={{}}
+              whileHover={{
+                textDecoration: "underline",
+                textDecorationThickness: "0.1rem",
+                ...itemHover,
+              }}
+              className="w-max"
+            >
+              Home
+            </motion.h1>
           </Link>
-          <LoginButton session={session} />
-        </div>
-      </header>
-    </>
+        </motion.div>
+
+        <motion.div
+          variants={ItemContainerVariant}
+          className="flex h-full items-center gap-4 justify-self-end"
+        >
+          <motion.div variants={itemVariantRight}>
+            <Link
+              target="_blank"
+              href="https://github.com/teotoivo"
+              className=""
+            >
+              <motion.div whileHover={itemHover}>
+                <GitIcon className="w-12 self-center transition-all duration-150 ease-in-out" />
+              </motion.div>
+            </Link>
+          </motion.div>
+
+          <motion.div variants={itemVariantRight}>
+            <Link
+              target="_blank"
+              href="https://www.linkedin.com/in/teo-maximilien/"
+              className="justify-self-cente transition-all duration-150 ease-in-out"
+            >
+              <motion.div whileHover={itemHover}>
+                <Linkedin className="w-12" />
+              </motion.div>
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: {
+                delay: 0.3,
+                duration: 3,
+                type: "spring",
+              },
+            }}
+          >
+            <motion.div whileHover={itemHover} className="h-12 w-12">
+              <LoginButton session={session} />
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.header>
+    </motion.div>
   );
 }
