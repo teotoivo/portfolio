@@ -5,7 +5,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import type { Database } from "@/types/supabase";
 
-import ItemCaroussel from "@/components/ItemCaroussel";
+import ItemCaroussel from "@/app/(portfolio)/components/ItemCaroussel";
 
 export default async function page() {
   const supabase = createClientComponentClient<Database>();

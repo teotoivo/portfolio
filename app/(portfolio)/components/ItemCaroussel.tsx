@@ -14,7 +14,7 @@ import {
   SqlIcon,
   TailwindIcon,
   TsIcon,
-} from "./Icons";
+} from "../../../components/Icons";
 type skillItem = [
   string,
   (props: React.SVGProps<SVGSVGElement>) => React.ReactElement,

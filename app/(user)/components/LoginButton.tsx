@@ -9,12 +9,18 @@ import {
 } from "@supabase/auth-helpers-nextjs";
 import { Database } from "@/types/supabase";
 import UserMenu from "./UserMenu";
-import Login from "@/components/Login";
-import SignUp from "@/components/SignUp";
+import Login from "@/app/(user)/components/Login";
+import SignUp from "@/app/(user)/components/SignUp";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
-export default function LoginButton({ session }: { session: Session | null }) {
+export default function LoginButton({
+  session,
+  variant,
+}: {
+  session: Session | null;
+  variant: Variants;
+}) {
   const path = usePathname();
   const supabase = createClientComponentClient<Database>();
   const routePath = path.split("/")[1];
@@ -23,8 +29,8 @@ export default function LoginButton({ session }: { session: Session | null }) {
 
   return (
     <>
-      {(() => {
-        if (routePath == "user") {
+      <motion.div variants={variant}>
+        {(() => {
           return session?.user ? (
             <UserMenu />
           ) : (
@@ -35,10 +41,8 @@ export default function LoginButton({ session }: { session: Session | null }) {
               <p>Login</p>
             </button>
           );
-        } else {
-          return <></>;
-        }
-      })()}
+        })()}
+      </motion.div>
       <AnimatePresence mode="wait">
         {showLogin && (
           <Login setShowLogin={setShowLogin} setShowSignup={setShowSignup} />

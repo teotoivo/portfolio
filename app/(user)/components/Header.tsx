@@ -108,10 +108,6 @@ const itemVariantRight: Variants = {
 export default function Header() {
   const supabase = createClientComponentClient<Database>();
 
-  const path = usePathname();
-
-  const route = path.split("/")[1];
-
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
@@ -144,10 +140,7 @@ export default function Header() {
         className="fixed top-0 z-50 grid h-16  w-full grid-flow-col items-center gap-4 px-6"
       >
         <motion.div variants={itemVariantLeft}>
-          <Link
-            className="justify-self-start"
-            href={route === "user" ? "/user" : "/"}
-          >
+          <Link className="justify-self-start" href="/user">
             <motion.h1
               initial={{}}
               whileHover={{
@@ -166,44 +159,9 @@ export default function Header() {
           variants={ItemContainerVariant}
           className="flex h-full items-center gap-4 justify-self-end"
         >
-          <motion.div variants={itemVariantRight}>
-            <Link
-              target="_blank"
-              href="https://github.com/teotoivo"
-              className=""
-            >
-              <motion.div whileHover={itemHover}>
-                <GitIcon className="w-12 self-center transition-all duration-150 ease-in-out" />
-              </motion.div>
-            </Link>
-          </motion.div>
-
-          <motion.div variants={itemVariantRight}>
-            <Link
-              target="_blank"
-              href="https://www.linkedin.com/in/teo-maximilien/"
-              className="justify-self-cente transition-all duration-150 ease-in-out"
-            >
-              <motion.div whileHover={itemHover}>
-                <Linkedin className="w-12" />
-              </motion.div>
-            </Link>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: {
-                delay: 0.3,
-                duration: 3,
-                type: "spring",
-              },
-            }}
-          >
-            <motion.div whileHover={itemHover} className="h-12 w-12">
-              <LoginButton session={session} />
-            </motion.div>
-          </motion.div>
+          <div className="h-12">
+            <LoginButton session={session} variant={itemVariantRight} />
+          </div>
         </motion.div>
       </motion.header>
     </motion.div>
