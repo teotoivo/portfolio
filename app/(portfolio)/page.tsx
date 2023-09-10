@@ -1,20 +1,10 @@
 "use client";
 
 import React from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
-import type { Database } from "@/types/supabase";
 
 import ItemCaroussel from "@/app/(portfolio)/components/ItemCaroussel";
 
 export default async function page() {
-  const supabase = createClientComponentClient<Database>();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const { data: countries } = await supabase.from("countries").select();
-
   //get age from bday 07.11.2005
   const age = Math.floor(
     (new Date().getTime() - new Date("2005-11-07").getTime()) /
