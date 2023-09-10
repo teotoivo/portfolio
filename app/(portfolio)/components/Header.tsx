@@ -113,7 +113,7 @@ export default function Header() {
         variants={ItemContainerVariant}
         className="fixed top-0 z-50 grid h-16  w-full grid-flow-col items-center gap-4 px-6"
       >
-        <motion.div variants={itemVariantLeft}>
+        <motion.div variants={itemVariantLeft} className="w-max">
           <Link className="justify-self-start" href="/">
             <motion.h1
               initial={{}}
