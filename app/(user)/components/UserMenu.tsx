@@ -66,6 +66,7 @@ export default function UserMenu() {
         className="shadow-btn-main shadow-white duration-200 ease-in-out hover:scale-105 hover:border-btn-border-hover"
         onClick={() => setShowMenu(!showMenu)}
         whileTap={{ scale: 0.9 }}
+        aria-label="user menu"
       >
         <UserIcon className="h-12 w-12" />
       </motion.button>
