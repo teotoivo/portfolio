@@ -5,6 +5,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import type { Database } from "@/types/supabase";
+import { RecoilRoot } from "recoil";
 
 export const metadata = {
   title: "portfolio",
@@ -29,13 +30,14 @@ export default async function RootLayout({
       <head>
         <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
       </head>
-
-      <body className="m-0 flex min-h-screen flex-col overflow-x-hidden">
-        <Header />
-        <div className="flex flex-1 flex-col bg-main bg-cover  bg-fixed">
-          {children}
-        </div>
-      </body>
+      <RecoilRoot>
+        <body className="m-0 flex min-h-screen flex-col overflow-x-hidden">
+          <Header />
+          <div className="flex flex-1 flex-col bg-main bg-cover  bg-fixed">
+            {children}
+          </div>
+        </body>
+      </RecoilRoot>
     </html>
   );
 }
