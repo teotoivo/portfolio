@@ -142,13 +142,10 @@ export default function Header() {
         <motion.div variants={itemVariantLeft}>
           <Link className="justify-self-start" href="/user">
             <motion.h1
-              initial={{}}
               whileHover={{
-                textDecoration: "underline",
-                textDecorationThickness: "0.1rem",
                 ...itemHover,
               }}
-              className="w-max"
+              className="w-max hover:underline hover:decoration-2"
             >
               Home
             </motion.h1>
