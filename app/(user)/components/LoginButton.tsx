@@ -1,8 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Session,
   createClientComponentClient,
@@ -26,6 +26,36 @@ export default function LoginButton({
   const routePath = path.split("/")[1];
   const [showLogin, setShowLogin] = React.useState(false);
   const [showSignup, setShowSignup] = React.useState(false);
+
+  const readonlySearchParams = useSearchParams();
+  const searchParams = new URLSearchParams(
+    Array.from(readonlySearchParams.entries()),
+  );
+  const route = useRouter();
+  const params = useSearchParams();
+
+  useEffect(() => {
+    if (params.get("type")) {
+      switch (params.get("type")) {
+        case "login":
+          setShowLogin(true);
+          break;
+        case "signup":
+          setShowSignup(true);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [params]);
+
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (event === "SIGNED_IN") {
+      setShowLogin(false);
+      setShowSignup(false);
+      route.push("/user");
+    }
+  });
 
   return (
     <>
