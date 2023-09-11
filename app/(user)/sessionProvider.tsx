@@ -14,7 +14,7 @@ export default function sessionProvider({
   useEffect(() => {
     async function getSession() {
       const {
-        data: { session: session1 },
+        data: { session },
       } = await supabase.auth.getSession();
     }
     supabase.auth.onAuthStateChange((event, session) => {
