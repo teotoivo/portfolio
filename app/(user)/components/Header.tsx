@@ -8,7 +8,7 @@ import UserMenu from "./UserMenu";
 import type { Database } from "@/types/supabase";
 import LoginButton from "./LoginButton";
 import { GitIcon, Linkedin } from "@/components/Icons";
-import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Variants, motion } from "framer-motion";
 
 export const dynamic = "force-dynamic";
@@ -137,18 +137,15 @@ export default function Header() {
       ></motion.div>
       <motion.header
         variants={ItemContainerVariant}
-        className="fixed top-0 z-50 grid h-16  w-full grid-flow-col items-center gap-4 px-6"
+        className="fixed top-0 z-10 grid h-16  w-full grid-flow-col items-center gap-4 px-6"
       >
         <motion.div variants={itemVariantLeft}>
           <Link className="justify-self-start" href="/user">
             <motion.h1
-              initial={{}}
               whileHover={{
-                textDecoration: "underline",
-                textDecorationThickness: "0.1rem",
                 ...itemHover,
               }}
-              className="w-max"
+              className="w-max hover:underline hover:decoration-2"
             >
               Home
             </motion.h1>

@@ -1,13 +1,14 @@
 "use client";
-import React, { useRef } from "react";
+import React, { use, useRef } from "react";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import Link from "next/link";
 import { Variants, motion } from "framer-motion";
 
 import OutsideAlerter from "../../../components/OutsideAlerter";
+import ErrorComponent from "./ErrorComponent";
 
 export const bgVariants: Variants = {
   initial: {
@@ -71,23 +72,6 @@ export default function Login({
   setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
   setShowSignup: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const router = useRouter();
-  const supabase = createClientComponentClient<Database>();
-  const formRef = useRef<HTMLFormElement>(null);
-
-  function displayError(message: string) {
-    alert(message);
-  }
-
-  const handleSignIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-    router.push("/user");
-    router.refresh();
-    if (error) displayError(error.message);
-  };
   return (
     <>
       <motion.div
@@ -108,19 +92,8 @@ export default function Login({
             <motion.form
               variants={formVariants}
               className="flex flex-col items-center justify-center gap-4"
-              action=""
-              ref={formRef}
-              onSubmit={(e) => {
-                e.preventDefault();
-                const email = formRef.current?.elements.namedItem(
-                  "email",
-                ) as HTMLInputElement;
-                const password = formRef.current?.elements.namedItem(
-                  "password",
-                ) as HTMLInputElement;
-                setShowLogin(false);
-                handleSignIn(email.value, password.value);
-              }}
+              action="/user/auth/login"
+              method="POST"
             >
               <motion.input
                 variants={formChildVariants}
@@ -161,6 +134,7 @@ export default function Login({
               >
                 Sign Up
               </motion.button>
+              <ErrorComponent />
             </motion.form>
           </div>
         </OutsideAlerter>

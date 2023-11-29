@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { Database } from "@/types/supabase";
 import Link from "next/link";
 import { AuthResponse } from "@supabase/supabase-js";
@@ -21,49 +21,17 @@ export default function SignUp({
   setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
   setShowSignup: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const router = useRouter();
   const supabase = createClientComponentClient<Database>();
-  const formRef = useRef<HTMLFormElement>(null);
+
   const [isPassValid, setIsPassValid] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const displayError = (message: string) => {
-    setError(message);
-  };
+  const readonlySearchParams = useSearchParams();
+  const searchParams = new URLSearchParams(
+    Array.from(readonlySearchParams.entries()),
+  );
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event == "SIGNED_IN") {
-      router.push("/user");
-    }
-  });
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSignUp = async (
-    email: string,
-    password: string,
-    first_name: string,
-    last_name: string,
-    age: string,
-  ) => {
-    const {
-      data: { user, session },
-      error,
-    }: AuthResponse = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        emailRedirectTo: `${location.origin}/user/auth/callback`,
-        data: {
-          first_name: first_name,
-          last_name: last_name,
-          age: age,
-        },
-      },
-    });
-
-    if (error) displayError(error.message);
-
-    router.push(`/user/verifyemail?email=${email}`);
-  };
   return (
     <motion.div
       className="fixed left-0 top-0 flex h-screen w-screen items-center justify-center bg-background-with-opacity"
@@ -83,39 +51,13 @@ export default function SignUp({
           <motion.form
             variants={formVariants}
             className="flex flex-col items-center justify-center gap-4"
-            action=""
+            action="/user/auth/signup"
+            method="POST"
             ref={formRef}
-            onSubmit={(e) => {
-              e.preventDefault();
-              const email = formRef.current?.elements.namedItem(
-                "email",
-              ) as HTMLInputElement;
-              const password = formRef.current?.elements.namedItem(
-                "password",
-              ) as HTMLInputElement;
-              const confirm_password = formRef.current?.elements.namedItem(
-                "confirm_password",
-              ) as HTMLInputElement;
-              const first_name = formRef.current?.elements.namedItem(
-                "first_name",
-              ) as HTMLInputElement;
-              const last_name = formRef.current?.elements.namedItem(
-                "last_name",
-              ) as HTMLInputElement;
-              const age = formRef.current?.elements.namedItem(
-                "age",
-              ) as HTMLInputElement;
-              if (password.value === confirm_password.value) {
-                setShowSignup(false);
-                handleSignUp(
-                  email.value,
-                  password.value,
-                  first_name.value,
-                  last_name.value,
-                  age.value,
-                );
-              } else {
-                displayError("Passwords do not match");
+            onSubmit={async (e) => {
+              if (!isPassValid) {
+                e.preventDefault();
+                return;
               }
             }}
           >
@@ -192,17 +134,20 @@ export default function SignUp({
             >
               Sign up
             </motion.button>
-            <ErrorComponent error={error} />
             <motion.button
               variants={formChildVariants}
               className="text-md underline"
               onClick={() => {
+                searchParams.delete("error");
+                searchParams.delete("type");
+                searchParams.delete("message");
                 setShowSignup(false);
                 setShowLogin(true);
               }}
             >
               Login
             </motion.button>
+            <ErrorComponent />
           </motion.form>
         </div>
       </OutsideAlerter>

@@ -11,7 +11,7 @@
     --btn-secondary-background: #848484;
     --text-primary: #efefef;
     --background-with-opacity: rgba(var(--background), 0.8);
-    --bakcground-image: url("/background.jpg");
+    --bakcground-image: url("/background.webp");
   }
 
   @media (prefers-color-scheme: light) {
@@ -23,7 +23,7 @@
       --btn-secondary-background: #848484;
       --text-primary: rgb(19, 19, 19);
       --background-with-opacity: rgba(var(--background), 0.8);
-      --bakcground-image: url("/background_light.jpg");
+      --bakcground-image: url("/background_light.webp");
     }
   }
   body {

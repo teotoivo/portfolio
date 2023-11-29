@@ -32,9 +32,7 @@ export default async function RootLayout({
 
       <body className="m-0 flex min-h-screen flex-col overflow-x-hidden">
         <Header />
-        <div className="flex flex-1 flex-col bg-main bg-cover  bg-fixed">
-          {children}
-        </div>
+        <div className="flex flex-1 flex-col ">{children}</div>
       </body>
     </html>
   );

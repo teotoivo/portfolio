@@ -1,20 +1,10 @@
 "use client";
 
 import React from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-
-import type { Database } from "@/types/supabase";
 
 import ItemCaroussel from "@/app/(portfolio)/components/ItemCaroussel";
 
 export default async function page() {
-  const supabase = createClientComponentClient<Database>();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const { data: countries } = await supabase.from("countries").select();
-
   //get age from bday 07.11.2005
   const age = Math.floor(
     (new Date().getTime() - new Date("2005-11-07").getTime()) /
@@ -27,7 +17,7 @@ export default async function page() {
 
   return (
     <>
-      <section id="main">
+      <section id="main" className="bg-main bg-cover  bg-fixed">
         <div className="flex h-screen flex-col items-center justify-center">
           <div className="flex max-w-[90%] flex-col self-center">
             <div
@@ -37,16 +27,16 @@ export default async function page() {
             </div>
           </div>
         </div>
+        <picture className="">
+          <source
+            srcSet="/darkWaves.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img src="/lightWaves.svg" alt="wave divider" />
+        </picture>
       </section>
       <section id="about">
         <div>
-          <picture>
-            <source
-              srcSet="/darkWaves.svg"
-              media="(prefers-color-scheme: dark)"
-            />
-            <img src="/lightWaves.svg" alt="wave divider" />
-          </picture>
           <div className="flex w-full flex-col items-center gap-6 bg-background p-10">
             <h1 className="underline">About me</h1>
             <p className="text-center align-middle text-base">
@@ -56,22 +46,25 @@ export default async function page() {
               gym climbing and going to the gym.
             </p>
           </div>
-          <picture>
-            <source
-              srcSet="/darkWaves.svg"
-              media="(prefers-color-scheme: dark)"
-            />
-            <img
-              className=" rotate-180"
-              src="/lightWaves.svg"
-              alt="wave divider"
-            />
-          </picture>
         </div>
       </section>
-      <section id="skills" className="flex min-h-screen justify-center">
-        <ItemCaroussel />
-      </section>
+      <div>
+        <picture>
+          <source
+            srcSet="/darkWaves.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <img
+            className=" rotate-180"
+            src="/lightWaves.svg"
+            alt="wave divider"
+          />
+        </picture>
+
+        <section id="skills" className="flex min-h-screen justify-center">
+          <ItemCaroussel />
+        </section>
+      </div>
     </>
   );
 }

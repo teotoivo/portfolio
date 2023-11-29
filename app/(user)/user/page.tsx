@@ -7,18 +7,11 @@ import type { Database } from "@/types/supabase";
 import { GitIcon, Linkedin } from "@/components/Icons";
 
 export default async function page() {
-  const supabase = createServerComponentClient<Database>({ cookies });
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  const { data: countries } = await supabase.from("countries").select();
-
   return (
-    <div className="flex-1 h-[calc(100vh-56px)] flex flex-col items-center justify-center">
-      <div className="self-center flex-col flex max-w-[90%]">
+    <div className="flex h-[calc(100vh-56px)] flex-1 flex-col items-center justify-center">
+      <div className="flex max-w-[90%] flex-col self-center">
         <div
-          className={`self-center bg-background-with-opacity w-fit rounded-lg p-10  text-center`}
+          className={`w-fit self-center rounded-lg bg-background-with-opacity p-10  text-center`}
         >
           <h1 className="">Welcome</h1>
         </div>
